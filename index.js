@@ -9,6 +9,9 @@ const app = express();
 app.use(logger("dev"));
 app.use(express.json());
 
+const usersRouter = require("./routes/users/users-router");
+app.use("/api/v1/users", usersRouter);
+
 const PORT = 3000;
 
 app.listen(PORT, () => {
