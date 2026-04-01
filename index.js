@@ -12,6 +12,9 @@ app.use(express.json());
 const usersRouter = require("./routes/users/users-router");
 app.use("/api/v1/users", usersRouter);
 
+const eventsRouter = require("./routes/events/events-router");
+app.use("/api/v1/events", eventsRouter);
+
 const PORT = 3000;
 
 app.listen(PORT, () => {
