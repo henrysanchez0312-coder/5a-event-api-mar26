@@ -6,14 +6,19 @@ const connectToMongoDB = require("./database/connectToMongoDB");
 
 const app = express();
 
-app.use(logger("dev"));
-app.use(express.json());
+app.use(logger("dev"))
+app.use(express.json())
 
 const usersRouter = require("./routes/users/users-router");
-app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/users", usersRouter)
 
 const eventsRouter = require("./routes/events/events-router");
-app.use("/api/v1/events", eventsRouter);
+app.use("/api/v1/events", eventsRouter)
+
+const bookingsRouter = require("./routes/bookings/bookings-router");
+app.use("/api/v1/bookings", bookingsRouter);
+
+
 
 const PORT = 3000;
 
