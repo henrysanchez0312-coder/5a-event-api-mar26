@@ -32,8 +32,18 @@ const getAllEvents = async (queryData) => {
             }
         //}
 
+        // Sorting with mongodb
+        // {propertyToSortBy: sortOrder}
+        const sortObject = {}
+
+        // sortObject[queryData.sortyBy]
+        // first, evaluate queryData.sortBy
+        // sortObject["title"] - same as sortObject.title
+        sortObject[queryData.sortBy] = queryData.sortOrder
+
+
         // example: ?date=07-10-26&category=conference - only conference on july 10, 2026
-        const events = await Event.find(filterObject);
+        const events = await Event.find(filterObject).sort({ title: "asc"});
 
         return events;
     } catch (error) {
