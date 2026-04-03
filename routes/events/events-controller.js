@@ -1,9 +1,40 @@
 
 const Event = require("./events-model");
 
-const getAllEvents = async () => {
+// queryData = req.query
+// in router we will call getAllEvents with the query data
+const getAllEvents = async (queryData) => {
     try {
-        const events = await Event.find();
+
+        // filter by category
+        // object that will keep track of our filter queries
+        const filterObject = {};
+
+        // check the existance of the category
+        // if it exists we add the property to our filterObject
+        if(queryData.category) {
+            filterObject.category = queryData.category;
+        }
+
+        if(queryData.date) {
+            filterObject.date = queryData.date;
+        }
+
+        // Dealing with price
+        // deal with a range, getting everything between the min price and the max price
+                //if(queryData.minPrice && queryData.maxPrice) {
+            // there is no min or max price so we have to work with the price and built in
+            // $gte - greater than or equal to
+            // $lte - less than or equal to
+            filterObject.price = {
+                $gte: queryData.minPrice || 0, // this way works better because it's not hitting the && above. If no min, default to 0
+                $lte: queryData.maxPrice || Infinity // if no max, defult to infinity
+            }
+        //}
+
+        // example: ?date=07-10-26&category=conference - only conference on july 10, 2026
+        const events = await Event.find(filterObject);
+
         return events;
     } catch (error) {
         throw error
